@@ -12,6 +12,13 @@
 	function restore_options() {
 		var wKey, pKey, id, input, value;
 
+		input = document.getElementById("popupTab");
+		value = localStorage['ttw_popupTab'];
+		if (typeof value === "undefined" ) {
+			value = false;
+		}
+		input.value=value
+
 		for (wKey in defaults) {
 			if (defaults.hasOwnProperty(wKey)) {
 				for (pKey in defaults[wKey]) {
@@ -36,6 +43,9 @@
 			submit = document.getElementById('sub'),
 			valid = true,
 			i;
+
+		var popupCheck = document.getElementById('popupTab');
+		localStorage['ttw_popupTab'] = popupTab.checked;
 
 		// Save to Local Storage
 		for (i = 0; i < inputs.length; i++) {
@@ -182,5 +192,6 @@
 		$('.window').trigger('resize');
 		$('#extensions').click(open_extensions);
 		$('#sub').click(save_options);
+		$('#popupTab').click(save_options);
 	});
 }());
