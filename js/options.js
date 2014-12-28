@@ -17,7 +17,13 @@
 		if (typeof value === "undefined" ) {
 			value = false;
 		}
-		input.value=value
+		else if(value == 'true') {
+			value = true;
+		}
+		else {
+			value = false;
+		}
+		input.checked=value;
 
 		for (wKey in defaults) {
 			if (defaults.hasOwnProperty(wKey)) {
