@@ -13,17 +13,7 @@
 		var wKey, pKey, id, input, value;
 
 		input = document.getElementById("popupTab");
-		value = localStorage['ttw_popupTab'];
-		if (typeof value === "undefined" ) {
-			value = false;
-		}
-		else if(value == 'true') {
-			value = true;
-		}
-		else {
-			value = false;
-		}
-		input.checked=value;
+		input.checked = localStorage['ttw_popupTab'] == 'true';
 
 		for (wKey in defaults) {
 			if (defaults.hasOwnProperty(wKey)) {

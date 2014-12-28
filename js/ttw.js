@@ -1,14 +1,17 @@
 function get_size_and_pos(key) {
+	var popwin = localStorage['ttw_popupTab'] == 'true';
+
 	var defaults = {
-		"original": {width: 0.5, height: 1, left: 0, top: 0, min_top: 0},
-		"new": {width: 0.5, height: 1, left: 0.5, top: 0, min_top: 0}
+		"original": {width: 0.5, height: 1, left: 0, top: 0, min_top: 0, popup: false},
+		"new": {width: 0.5, height: 1, left: 0.5, top: 0, min_top: 0, popup: popwin}
 	};
 	var properties = {
 		width : localStorage['ttw_' + key + '-width'],
 		height : localStorage['ttw_' + key + '-height'],
 		left : localStorage['ttw_' + key + '-left'],
 		top : localStorage['ttw_' + key + '-top'],
-		min_top : localStorage['ttw_min_top']
+		min_top : localStorage['ttw_min_top'],
+		popup : undefined
 	};
 	var pKey;
 
@@ -68,6 +71,11 @@ function create_new_window(original_id) {
 	}, function (tabs) {
 		var vals = get_size_and_pos('new');
 
+		var wintype = 'normal';
+		if (vals['popup']) {
+			wintype = 'popup';
+		}
+
 		// Move it to a new window
 		chrome.windows.create({
 			tabId: tabs[0].id,
@@ -75,6 +83,7 @@ function create_new_window(original_id) {
 			height: vals['height'],
 			left: vals['left'],
 			top: vals['top'],
+			type: wintype,
 			incognito: tabs[0].incognito
 		}, function () {
 			chrome.windows.update(original_id, {
