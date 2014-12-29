@@ -1,17 +1,14 @@
 function get_size_and_pos(key) {
-	var popwin = localStorage['ttw_popupTab'] == 'true';
-
 	var defaults = {
-		"original": {width: 0.5, height: 1, left: 0, top: 0, min_top: 0, popup: false},
-		"new": {width: 0.5, height: 1, left: 0.5, top: 0, min_top: 0, popup: popwin}
+		"original": {width: 0.5, height: 1, left: 0, top: 0, min_top: 0},
+		"new": {width: 0.5, height: 1, left: 0.5, top: 0, min_top: 0}
 	};
 	var properties = {
 		width : localStorage['ttw_' + key + '-width'],
 		height : localStorage['ttw_' + key + '-height'],
 		left : localStorage['ttw_' + key + '-left'],
 		top : localStorage['ttw_' + key + '-top'],
-		min_top : localStorage['ttw_min_top'],
-		popup : undefined
+		min_top : localStorage['ttw_min_top']
 	};
 	var pKey;
 
@@ -72,7 +69,7 @@ function create_new_window(original_id) {
 		var vals = get_size_and_pos('new');
 
 		var wintype = 'normal';
-		if (vals['popup']) {
+		if (localStorage['ttw_popupTab'] == "true") {
 			wintype = 'popup';
 		}
 
