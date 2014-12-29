@@ -27,7 +27,7 @@ body {
 	font-family:'Oxygen', sans-serif;
 }
 
-#container, #note, #credit, #popupopt {
+#container, #note, #credit, #optcheckbox {
 	width: 408px;
 	margin: 0 auto;
 }
@@ -107,7 +107,7 @@ ul {
 	margin-top: 10px;
 }
 
-#popupopt {
+#optcheckbox {
 	/* TODO: learn css :) */
 	font-size: 14px;
 	font-weight: bold;

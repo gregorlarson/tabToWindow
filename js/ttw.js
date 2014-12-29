@@ -83,9 +83,11 @@ function create_new_window(original_id) {
 			type: wintype,
 			incognito: tabs[0].incognito
 		}, function (newwin) {
-			chrome.windows.update(original_id, {
-				focused: true
-			});
+		   if (localStorage['ttw_focusNew'] !== 'true') {
+				chrome.windows.update(original_id, {
+					focused: true
+				});
+			}
 			// save parent id in case we want to pop_in
 			sessionStorage[newwin.id]=original_id;
 		});
