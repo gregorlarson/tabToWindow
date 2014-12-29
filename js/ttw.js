@@ -85,10 +85,12 @@ function create_new_window(original_id) {
 			top: vals['top'],
 			type: wintype,
 			incognito: tabs[0].incognito
-		}, function () {
+		}, function (newwin) {
 			chrome.windows.update(original_id, {
 				focused: true
 			});
+			// save parent id in case we want to pop_in
+			sessionStorage[newwin.id]=original_id;
 		});
 	});
 }
@@ -100,6 +102,21 @@ function move_windows() {
 	});
 }
 
+function pop_in(outtab, orig_id) {
+	chrome.windows.get(orig_id,{},function(orig_win) {
+		if ( typeof orig_win === "undefined" ) {
+			// not sure this check is required.
+			return;
+		}
+		// Previous window exists
+		// It may be necessary to update current window to "normal" before
+		// move will work.
+		chrome.tabs.move(outtab.id,{
+			windowId: orig_id,
+			index: -1
+			});
+	});
+}
 
 function tab_to_window() {
 	// Check there are more than 1 tabs in current window
@@ -119,7 +136,19 @@ function tab_to_window() {
 				move_windows();
 			}
 		}
+		else {
+			chrome.windows.getCurrent({}, function(curwin) {
+				// If windows was previously popped-out, try and put it back.
+				var orig_id = sessionStorage[curwin.id];
+				if ( typeof orig_id === "undefined" ) {
+					return;
+				}
+				pop_in(tabs[0], +orig_id);
+			});
+		}
 	});
 }
 
 chrome.commands.onCommand.addListener(tab_to_window);
+
+// vim: tabstop=3 shiftwidth=3
