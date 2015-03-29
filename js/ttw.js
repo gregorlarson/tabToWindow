@@ -160,6 +160,10 @@ function tab_to_window(window_type) {
 		currentWindow: true
 	}, function (tabs) {
 		if (tabs.length <= 1) {
+			// To save key bindings, we could pop back in if the
+			// original window still exists, that is, using the
+			// same shortcut to pop out and back in.
+			window_to_tab();
 			return;
 		}
 
